@@ -18,10 +18,11 @@
   "custom_dpi": 150,
   "source_unchanged": true,
   "manual_gimp_four_plate_comparison": "not completed in previous version; not claimed",
-  "clean_zip_smoke_test": true,
   "store_bootstrap_copy_test": true,
   "tested_gimp_versions": [
     "3.2.8",
     "3.0.0"
-  ]
+  ],
+  "local_zip_extraction_smoke_test": true,
+  "internet_download_smart_app_control": "blocked: user report; not supported by the unsigned CMD release"
 }

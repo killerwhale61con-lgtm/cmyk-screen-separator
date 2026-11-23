@@ -2,7 +2,8 @@ CMYK Screen Separator
 
 The original application code in this distribution is provided under the
 GNU General Public License, version 3 or (at your option) any later version.
-See LICENSE. Source files and the release packaging script are included.
+See LICENSE. Corresponding source and build scripts are available at:
+https://github.com/killerwhale61con-lgtm/cmyk-screen-separator
 The software is provided without warranty, as detailed in that license.
 
 This is an unofficial tool that invokes the user's existing GIMP installation.
@@ -15,7 +16,10 @@ GIMP information and official downloads: https://www.gimp.org/
 GIMP license: https://www.gimp.org/about/COPYING
 GTK information: https://www.gtk.org/
 
-The optional Microsoft Store bootstrap makes a private local working copy
+The legacy ZIP's optional Microsoft Store bootstrap makes a private local working copy
 from the current user's installed GIMP. It does not download or redistribute
 that copy as part of this release, change GIMP binaries, or alter Windows
 security settings. That local copy is excluded from release archives.
+
+The new store/ native frontend does not use this legacy bootstrap or copy GIMP.
+Its MSIX contains only the frontend, GIMP worker script, assets and license notices.
