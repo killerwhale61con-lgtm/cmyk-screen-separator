@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0-beta",
+  "thumbnail_gallery": true,
+  "large_preview": true,
+  "invalid_image_rejected": true,
+  "post_separation_destination": true,
+  "cancel_keeps_plates": true,
+  "pending_job_recovery": true,
+  "failed_save_can_retry": true,
+  "no_overwrite": true,
+  "export_does_not_modify_plates": true,
+  "png_input": true,
+  "jpeg_input": true,
+  "dimensions_300": [
+    300,
+    300
+  ],
+  "custom_dpi": 150,
+  "source_unchanged": true,
+  "manual_gimp_four_plate_comparison": "not completed in previous version; not claimed",
+  "clean_zip_smoke_test": true,
+  "store_bootstrap_copy_test": true,
+  "tested_gimp_versions": [
+    "3.2.8",
+    "3.0.0"
+  ]
+}

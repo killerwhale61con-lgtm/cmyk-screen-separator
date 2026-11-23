@@ -1,0 +1,36 @@
+GitHubで公開する手順
+
+公開用ZIPとソース一式を準備済みです。GitHubへのアップロードは別の操作です。
+現時点のローカルZIPはインターネット上の公開ダウンロードURLではありません。
+
+推奨リポジトリ名：cmyk-screen-separator
+推奨リリースタグ：v0.2.0-beta
+推奨タイトル：CMYK Screen Separator 0.2.0-beta for Windows
+
+1. 自分のGitHubアカウントで公開（Public）リポジトリを作成します。
+2. この配布ソースのファイルを登録します。LICENSEとNOTICEも登録します。
+3. Releasesから新規リリースを作り、上記タグとタイトルを指定します。
+4. 「This is a pre-release」をオンにします。
+5. 作成したWindows用ZIPとSHA256SUMS.txtをリリース添付ファイルに追加します。
+6. 下の説明文を貼り付けて公開します。
+
+説明文例
+Windows 11向けの無料CMYK網点4色分解ツールです。GIMP 3が必要です。
+ZIPをすべて展開し、起動.cmdを実行してください。
+写真をサムネイルで選べ、分解後に保存先を指定できます。
+CMYK4枚を円形・周期7 px・45°・品質1で網点化し、JPEG品質100%で保存します。
+GPL-3.0-or-later。ソースコード付属。GIMP本体は含みません。
+ベータ版：手作業4版との完全一致比較・実印刷試験は未完了です。
+
+含めてよいもの
+  app.py、gallery.py、storage.py、worker.py、Start.cmd、起動.cmd
+  README.txt、README.md、CHANGELOG.txt、NOTICE、LICENSE、PUBLISHING.txt
+  tools/build_release.py、tests/smoke_test.py、TESTED.json、.gitignore
+
+公開しないもの
+  runtime、profile、data、書き出し、検証、__pycache__、.gitフォルダーの中身
+  個人の写真、処理ログ、job.json、設定ファイル、認証情報
+
+再ビルド
+  Python 3.10以降で tools/build_release.py を実行すると、distに配布ZIPを作ります。
+  このビルド処理にはGIMPは不要です。実際の画像処理と動作テストにはGIMP 3が必要です。

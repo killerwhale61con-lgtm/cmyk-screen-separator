@@ -1,0 +1,9 @@
+/runtime/
+/profile/
+/data/
+/dist/
+/書き出し/
+/検証/
+__pycache__/
+*.pyc
+起動エラー.txt
