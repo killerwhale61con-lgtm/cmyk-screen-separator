@@ -29,4 +29,8 @@ Storeアプリ審査と署名用証明書の本人・組織確認は別です。
 
 ## ライセンスとソース
 
+[Code signing policy](CODE_SIGNING.md) · [Privacy policy](PRIVACY.md) · [署名サービス申請文案（未提出）](desktop/SIGNING-APPLICATION-DRAFT.md)
+
+無料署名サービスSignPath Foundationへの申請準備を進めています。承認・署名は未完了です。新規プロジェクトのため、同サービスが要求する評判の条件を満たすかは未確定です。公開ソースをGitHub上でビルドし、署名前の成果物と生成元を記録するワークフローを用意しました。
+
 GPL-3.0-or-later。LICENSEを参照してください。GitHub版ZIPには対応するソースとビルド用スクリプトを同梱します。GIMP本体、個人の写真、開発環境のランタイムは同梱しません。

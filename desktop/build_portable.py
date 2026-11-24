@@ -17,7 +17,7 @@ def build(output):
     stage.mkdir(exist_ok=False)
     csc = Path(os.environ.get('WINDIR', r'C:\Windows')) / 'Microsoft.NET/Framework64/v4.0.30319/csc.exe'
     sources = sorted((ROOT/'store/src').glob('*.cs'))
-    if len(sources) != 4:
+    if {p.name for p in sources} != {'AssemblyInfo.cs', 'Core.cs', 'Gallery.cs', 'GimpBackend.cs', 'Main.cs'}:
         raise RuntimeError('Unexpected native source list')
     subprocess.run([str(csc), '/nologo', '/target:winexe', '/platform:x64', '/optimize+',
                     '/out:'+str(stage/'CMYKScreenSeparator.exe'),
@@ -27,8 +27,10 @@ def build(output):
     for name in ['worker.py', 'LICENSE', 'NOTICE']:
         (stage/name).write_bytes((ROOT/name).read_bytes())
     (stage/'README.md').write_bytes((ROOT/'desktop/README.md').read_bytes())
+    for name in ['CODE_SIGNING.md', 'PRIVACY.md']:
+        (stage/name).write_bytes((ROOT/name).read_bytes())
     source_files = ['worker.py', 'LICENSE', 'NOTICE', 'desktop/README.md',
-                    'desktop/build_portable.py', 'store/app.manifest'] + [p.relative_to(ROOT).as_posix() for p in sources]
+                    'CODE_SIGNING.md', 'PRIVACY.md', 'desktop/build_portable.py', 'store/app.manifest'] + [p.relative_to(ROOT).as_posix() for p in sources]
     for name in source_files:
         target = stage/'source'/name
         target.parent.mkdir(parents=True, exist_ok=True)

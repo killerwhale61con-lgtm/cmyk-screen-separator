@@ -1,0 +1,54 @@
+name: Windows source build (unsigned)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'store/src/**'
+      - 'store/app.manifest'
+      - 'desktop/**'
+      - 'worker.py'
+      - 'CODE_SIGNING.md'
+      - 'PRIVACY.md'
+      - '.github/workflows/windows-build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Compile native frontend and package corresponding source
+        shell: pwsh
+        run: |
+          python desktop/build_portable.py --output ci-output
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify product metadata and record source origin
+        shell: pwsh
+        run: |
+          $buildRoot = 'ci-output/CMYK-Screen-Separator-0.3.0-beta'
+          $fileInfo = [System.Diagnostics.FileVersionInfo]::GetVersionInfo((Resolve-Path "$buildRoot/CMYKScreenSeparator.exe"))
+          if ($fileInfo.ProductName -ne 'CMYK Screen Separator' -or $fileInfo.FileVersion -ne '0.3.0.0' -or $fileInfo.ProductVersion -ne '0.3.0.0') { throw 'Unexpected signing metadata' }
+          $origin = [ordered]@{ repository=$env:GITHUB_REPOSITORY; commit=$env:GITHUB_SHA; run_id=$env:GITHUB_RUN_ID; signed=$false; runtime_verified=$false }
+          $origin | ConvertTo-Json | Set-Content -LiteralPath 'ci-output/ORIGIN.json' -Encoding utf8
+      - name: Preserve unsigned artifact for verified signing intake
+        id: unsigned
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cmyk-unsigned-build
+          path: |
+            ci-output/CMYK-Screen-Separator-0.3.0-beta/
+            ci-output/ORIGIN.json
+          if-no-files-found: error
+          retention-days: 30
+
+# Signing is deliberately not enabled before a provider has approved this
+# project and its owner has configured the provider and submitter credentials.
+# No unsigned artifact is automatically promoted to a signed/public release.
