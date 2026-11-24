@@ -53,7 +53,7 @@ def build(identity_file, sdk, output, preview):
         logo(assets/name, size)
     csc = Path(os.environ.get('WINDIR', r'C:\Windows'))/'Microsoft.NET'/'Framework64'/'v4.0.30319'/'csc.exe'
     sources = sorted((HERE/'src').glob('*.cs'))
-    command = [str(csc), '/nologo', '/target:winexe', '/platform:x64', '/optimize+',
+    command = [str(csc), '/nologo', '/target:winexe', '/platform:x64', '/optimize+', '/define:STORE',
                '/out:'+str(stage/'CMYKScreenSeparator.exe'), '/win32manifest:'+str(HERE/'app.manifest'),
                '/r:System.Drawing.dll', '/r:System.Windows.Forms.dll', '/r:System.Web.Extensions.dll',
                '/r:System.Xml.Linq.dll'] + [str(path) for path in sources]

@@ -21,7 +21,12 @@ namespace CmykStore {
         readonly TableLayoutPanel grid = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(16), ColumnCount = 3, RowCount = 14 };
         Bitmap source; bool busy; string pending, last;
         public MainForm() {
-            Text = "CMYK網点4色分解 — Microsoft Store版 開発中"; Font = new Font("Yu Gothic UI", 10);
+#if STORE
+            Text = "CMYK網点4色分解 — Microsoft Store版 開発中";
+#else
+            Text = "CMYK網点4色分解 — 0.3.0-beta / GitHub版";
+#endif
+            Font = new Font("Yu Gothic UI", 10);
             ClientSize = new Size(1040, 660); MinimumSize = new Size(860, 600); AutoScaleMode = AutoScaleMode.Dpi; AutoScroll = true;
             grid.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 190)); grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100)); grid.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150));
             for (int i = 0; i < 7; i++) grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 34));

@@ -1,53 +1,32 @@
 # CMYK Screen Separator
 
-写真をシルクスクリーン用のCMYK網点4版へ変換する、Windows 11向け無料ツールです。GIMP 3を利用する非公式アプリです。
+写真からシルクスクリーン用のCMYK網点4版を作成する、Windows 11向けの無料・オープンソースツールです。GIMP 3を別途インストールして利用します。GIMPの公式製品ではありません。
 
-## 配布に関する重要なお知らせ
+## 配布方針
 
-**0.2.0-betaの起動用スクリプトは、Smart App Controlが有効なWindowsでブロックされる報告があります。この環境には未対応です。** ローカル展開テストとインターネット経由の起動テストは別で、後者の検証が不足していました。現在、.cmdを使わないMicrosoft Store向けMSIX版へ移行中です。Store版はまだ公開されていません。保護機能を無効にして起動する手順は案内していません。
+Microsoft Store版の申請準備を中止し、GitHub Releasesで配布するEXE版へ変更しました。利用者にStore開発者登録やアプリの審査は不要です。写真のサムネイル・拡大プレビュー、分解後の保存先指定を備えたWindows Forms画面を実装しています。
 
-[Store版のソース・ビルド方法・確認範囲](store/README.md)。ネイティブ画面のコンパイルとMSIX構造検証まで完了しています。仮ID・未署名のため利用者用インストーラーは未提供です。新画面とStore版GIMP連携の実機試験は未完了です。
+**0.3.0-betaは未署名の検証用ビルドです。2026-11-24にこの開発PCで通常起動を試しましたが、アプリケーション制御ポリシーによってブロックされました。起動問題は未解決です。** EXE化・GitHub公開だけではSmart App Controlの信頼は得られません。起動できる修正版として案内していません。Windowsの保護機能を無効にする手順は提供しません。
 
-[Microsoft公式の署名に関する説明](https://learn.microsoft.com/en-us/windows/apps/develop/smart-app-control/code-signing-for-smart-app-control)
+[GitHub版のビルド方法・使い方・制限](desktop/README.md) · [リリース一覧](https://github.com/killerwhale61con-lgtm/cmyk-screen-separator/releases)
 
-## 旧β版のダウンロード
+Storeアプリ審査と署名用証明書の本人・組織確認は別です。広く信頼される署名には証明書または署名サービスの準備が残ります。署名の購入・申請はまだ行っていません。[Microsoft公式資料](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/code-signing-options)
 
-[Windows用ZIP（0.2.0-beta）](https://github.com/killerwhale61con-lgtm/cmyk-screen-separator/releases/download/v0.2.0-beta/CMYK-Screen-Separator-0.2.0-beta-windows.zip) · [リリース一覧](https://github.com/killerwhale61con-lgtm/cmyk-screen-separator/releases)
+## 機能
 
-GIMP 3が必要です。ZIPをすべて展開して「起動.cmd」を実行してください。
+- JPEG/PNGのサムネイル一覧と拡大プレビュー
+- A4・A3・任意の幅/高さmm、元画像・1:1・3:2・4:3・任意比率
+- 白余白または中央切り抜き、DPIと出力ピクセル数の事前表示
+- GIMP標準CMYK分解→各色の階調反転1回→新聞印刷（円形・周期7・角度45°・品質1）
+- C.JPEG / M.JPEG / Y.JPEG / K.JPEGを白黒・最高品質・同寸法/DPIで個別保存
+- 分解後の保存先選択、保存保留と再開、新規出力フォルダー、元画像を上書きしない
 
-## インストールと起動
+## 確認状況
 
-1. [公式GIMP 3](https://www.gimp.org/downloads/)をインストールします。
-2. Windows用リリースZIPをすべて展開します。
-3. `起動.cmd`または`Start.cmd`をダブルクリックします。
+従来のworker.pyはGIMP 3.2.8と3.0.0で処理試験を実施しています。新しいEXE版はコンパイル・ZIP整合性検証まで成功しましたが、このPCでは起動時にブロックされるため、新画面とGIMP連携の動作確認は完了していません。GIMPの手作業4版との比較・実印刷試験も未完了です。
 
-Pythonの追加インストールは不要です。Store版のみの場合は、初回に既存GIMPからローカル作業用コピーを準備します。配布ZIPにGIMP本体は含みません。
+旧0.2.0-betaのCMD版もSmart App Controlが有効な環境には未対応です。Store向けコードはstore/に保管していますが、Storeへの申請・公開は進めません。
 
-## 使い方
+## ライセンスとソース
 
-「画像を選ぶ」でサムネイル一覧と拡大プレビューから写真を選びます。用紙サイズ・画像比率・余白／中央切り抜き・DPIを設定し、表示されたピクセル寸法を確認して分解します。
-
-初期設定では**分解後に保存先を選択**します。保存先選択をキャンセルしても4枚を保持し、再起動後も「保存先を選んで保存」から再開できます。保存先では新規サブフォルダーを作り、既存ファイルと元写真は上書きしません。
-
-## 出力
-
-- `C.JPEG` / `M.JPEG` / `Y.JPEG` / `K.JPEG`
-- GIMP標準CMYK分解、各色の階調反転1回
-- 新聞印刷：白地に黒、円形、周期7 px、角度45°、品質1
-- JPEG品質100%、同じ寸法・DPI、グレースケール
-- サイズ・切り抜き・余白は網点化前に適用
-
-## 状態
-
-**0.2.0-beta**。GIMP 3.2.8でサムネイル選択、分解後保存、保存保留・復元、保存失敗後の再試行、JPEG／PNG入力、寸法とDPIを検証しています。GIMPの手作業4版との完全一致比較と実印刷試験は未完了です。
-
-詳しい条件・制限は[README.txt](README.txt)、検証項目は[TESTED.json](TESTED.json)を参照してください。
-
-## ライセンスと公開
-
-独自コードはGPL-3.0-or-later。ソースコードは配布ZIPに含まれます。[LICENSE](LICENSE)と[NOTICE](NOTICE)を参照してください。
-
-`python tools/build_release.py`で公開用ZIPを生成できます。固定したファイル一覧だけを梱包し、写真・ログ・個人設定・GIMP本体を除外します。公開方法は[PUBLISHING.txt](PUBLISHING.txt)に記載しています。
-
-
+GPL-3.0-or-later。LICENSEを参照してください。GitHub版ZIPには対応するソースとビルド用スクリプトを同梱します。GIMP本体、個人の写真、開発環境のランタイムは同梱しません。
